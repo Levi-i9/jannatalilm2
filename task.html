@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قائمة المهام</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <li><a href="index.html"  id="bak">&#10531;</a></li>
+
+    
+    <div class="container">
+        <div class="todo-app">
+            <h2>قائمة المهام للحفظ <i class="fas fa-tasks"></i></h2>
+            <div class="input-section">
+                <input type="text" id="task-input" placeholder="أضف مهمة جديدة...">
+                <button id="add-button">إضافة</button>
+            </div>
+            <ul id="task-list">
+                <!-- Tasks will be added here dynamically -->
+            </ul>
+            <div class="filters">
+                <span class="task-count">0 مهام متبقية</span>
+                <div class="filter-buttons">
+                    <button class="active" data-filter="all">الكل</button>
+                    <button data-filter="active">النشطة</button>
+                    <button data-filter="completed">المكتملة</button>
+                </div>
+                <button id="clear-completed">مسح المكتملة</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

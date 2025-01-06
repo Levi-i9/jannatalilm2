@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لعبة اسالتنا</title>
+  <link rel="stylesheet" href="#.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #b6b6b6;
+      height: 100%;
+      width:100%;
+    }
+
+    .container {
+      max-width: 450px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #000000;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      box-shadow: 0px 0px 80px #3EFFE5;
+      border-radius: 60px 70px 40px 140px;
+    }
+
+    h1, p {
+      text-align: center;
+    }
+
+    input[type="text"] {
+      width: calc(100% - 80px);
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #2CF9FF;
+      border-radius: 5px;
+      box-shadow: 0px 0px 20px #4EE5FF;
+    }
+
+    button {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #3DE2FF;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      border-radius: 60px 70px 40px 140px;
+      box-shadow: 12px 10px 20px #383737;
+    }
+
+    button:hover {
+      background-color: #52FAFF;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+      text-align: center;
+      color: #FFFFFF;
+    }
+
+    div {
+      color: #FFFFFF;
+    }
+
+    #k {
+      position: absolute;
+      top: 510px;
+      right: 30px;
+      background-color: #35F9FF;
+      color: #ffffff;
+      padding: 10px 35px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 80px 80px;
+      border: 1px solid #69FFF1;
+      box-shadow: 0 0 20px 3px #63C5DB;
+      text-decoration: none;
+    }
+
+    #answer {
+      background-color: #000000;
+      color: #FFFFFF;
+    }
+
+    #answer:hover {
+      background-color: #353535;
+    }
+
+
+    
+::selection{
+    background-color: #00e1ff;
+    color: #000000;
+   
+  }
+  
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>لعبة أسئلة إسلامية</h1>
+    <div id="question" class="question"></div>
+    <input type="text" id="answer" placeholder="أدخل إجابتك هنا">
+    <button onclick="checkAnswer()">تحقق</button>
+    <div id="result"></div>
+    <div id="questionNumber" class="question-number">سؤال 1 من 20</div>
+    <button onclick="changeQuestion()">التالي</button>
+    <button onclick="restartGame()">إعادة اللعبة</button>
+  </div>
+    <a  href="index.html" id="k">العودة</a>
+  
+
+  <script>
+    var originalQuestionsAndAnswers = [
+      { question: "ما هو أول مسجد بُني في الإسلام؟", answer: "مسجد قباء" },
+      { question: "من هو أول من أسلم من الصبيان؟", answer: "علي بن أبي طالب" },
+      { question: "من هو آخر الأنبياء؟", answer: "محمد" },
+      { question: "كم عدد أركان الإسلام؟", answer: "خمسة" },
+      { question: "ما هي أطول سورة في القرآن؟", answer: "سورة البقرة" },
+      { question: "كم عدد السور في القرآن الكريم؟", answer: "114" },
+      { question: "من هو النبي الذي عاش في بطن الحوت؟", answer: "يونس" },
+      { question: "ما هي السورة التي تُسمى قلب القرآن؟", answer: "سورة يس" },
+      { question: "ما هي الصلاة التي يصليها المسلمون عند الخسوف؟", answer: "صلاة الخسوف" },
+      { question: "كم عدد الصلوات المفروضة في اليوم؟", answer: "خمس" },
+      { question: "من هو الصحابي الذي لقبه الرسول بـ 'سيف الله المسلول'؟", answer: "خالد بن الوليد" },
+      { question: "ما هو عدد أيام الأسبوع الحرام في الأشهر الحرم؟", answer: "أربعة" },
+      { question: "ما هو الاسم الآخر لليلة القدر في القرآن؟", answer: "خير من ألف شهر" },
+      { question: "كم عدد السنوات التي قضاها الرسول في مكة بعد البعثة؟", answer: "13 سنة" },
+      { question: "ما هو الحج الأصغر؟", answer: "العمرة" },
+      { question: "من هو النبي الذي أُرسل إلى قوم ثمود؟", answer: "صالح" },
+      { question: "ما هي أقصر سورة في القرآن الكريم؟", answer: "سورة الكوثر" },
+      { question: "كم مرة ذُكر اسم 'موسى' في القرآن الكريم؟", answer: "136 مرة" },
+      { question: "من هو أول من جهر بالقرآن الكريم في مكة؟", answer: "عبد الله بن مسعود" },
+      { question: "ما هي أول آية نزلت على الرسول محمد؟", answer: "اقرأ باسم ربك الذي خلق" }
+    ];
+
+    var currentQuestionIndex = 0;
+    var correctAnswers = 0;
+
+    function displayQuestion() {
+      document.getElementById("question").textContent = originalQuestionsAndAnswers[currentQuestionIndex].question;
+      document.getElementById("questionNumber").textContent = "سؤال " + (currentQuestionIndex + 1) + " من " + originalQuestionsAndAnswers.length;
+    }
+
+    function checkAnswer() {
+      var userAnswer = document.getElementById("answer").value.trim();
+      var correctAnswer = originalQuestionsAndAnswers[currentQuestionIndex].answer;
+
+      if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+        document.getElementById("result").textContent = "إجابة صحيحة!";
+        correctAnswers++;
+      } else {
+        document.getElementById("result").textContent = "إجابة خاطئة. الإجابة الصحيحة هي: " + correctAnswer;
+      }
+
+      document.getElementById("answer").value = "";
+    }
+
+    function changeQuestion() {
+      currentQuestionIndex = (currentQuestionIndex + 1) % originalQuestionsAndAnswers.length;
+      displayQuestion();
+      document.getElementById("result").textContent = "";
+    }
+
+    function restartGame() {
+      currentQuestionIndex = 0;
+      correctAnswers = 0;
+      displayQuestion();
+      document.getElementById("result").textContent = "";
+    }
+
+    displayQuestion();
+  </script>
+</body>
+</html> 

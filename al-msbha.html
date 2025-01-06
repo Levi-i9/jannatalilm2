@@ -1,0 +1,517 @@
+
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>المسبحة الإلكترونية</title>
+
+  <style>
+    body {
+      background-color: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+    
+      transition: background-color 1.3s;
+      
+      
+    }
+
+    .counter-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      
+      
+    }
+
+.tasbeeh {
+  
+  width: 200px;
+  height: 200px;
+  background-color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5em;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  transition: background-color 0.3s, box-shadow 0.3s;
+  margin-bottom: 30px;
+
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3), 0 0 40px rgba(255, 255, 255, 0.5);
+}
+    .moon {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background: radial-gradient(circle, #F9F9F9 10%, transparent 10.5%);
+      border-radius: 50%;
+      animation: glow 2s infinite alternate;
+      top: 20%;
+      left: 20%;
+    }
+
+    #counter {
+      color: #000000;
+      background-color: #FFFFFF;
+      border: 2px solid #000000;
+      padding: 10px;
+      border-radius: 20px;
+      margin-top: 10px;
+      box-shadow: 0px 0px 40px #FFFFFF;
+    }
+
+    .reset-button,
+    .toggle-light-button {
+      margin-top: 10px;
+      width: 120px;
+      height: 40px;
+      background-color: #fff;
+      border: 10px solid #000;
+      border-radius: 50px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .change-shadow-button,
+    .change-ball-button {
+      margin-top: 10px;
+      width: 120px;
+      height: 40px;
+      background-color: #fff;
+      border: 10px solid #000;
+      border-radius: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      
+    }
+    
+    
+
+    @keyframes glow {
+      to {
+        transform: scale(1.2);
+        opacity: 0.8;
+      }
+    }
+
+    .tasbeeh.clicked {
+      box-shadow: 0 0 60px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 255, 255, 0.6);
+    }
+
+    /* نمط لون الصفحة الليلي */
+    body.night-mode {
+      background-color: #000000;
+      
+    }
+
+    .tasbeeh.night-mode {
+      background-color: #000000;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.3), 0 0 40px rgba(255, 255, 255, 0.5);
+    }
+    
+    .tasbeeh {
+      /* الستايلات الأخرى هنا */
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3), 0 0 40px #FFFFFF;
+    }
+    
+
+    /* نمط لون الصفحة النهاري */
+    body.day-mode {
+      background-color: #FFFFFF;
+      box-shadow: 11px 110px 80px #000000;
+    }
+
+   .tasbeeh.day-mode {
+     background-color: #1E1E1E;
+     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.5);
+   }
+   
+    .white-shadow {
+      box-shadow: 0 0 20px #FFFFFF, 0 0 40px #000000;
+    }
+    
+    .black-shadow {
+      box-shadow: 0 0 20px #60f4ff, 0 0 40px #44e3ff;
+    }
+    
+    /* في الوضع الليلي */
+    body.night-mode .tasbeeh.clicked {
+      box-shadow: 0 0 60px #FFFFFF, 0 0 50px #000000;
+    }
+    
+    /* في الوضع النهاري */
+    body.day-mode .tasbeeh.clicked {
+      box-shadow: 0 0 60px #000000, 0 0 50px #000000;
+    }
+    
+    
+    
+    
+    
+    
+    
+    /* تنسيق الأزرار */
+    .reset-button,
+    .toggle-light-button,
+    .change-shadow-button,
+    .change-ball-button  {
+      width: 120px;
+      height: 30px;
+      margin: 13px;
+      border: none;
+      border-radius: 20px ;
+      font-size: 18px;
+      cursor: pointer;
+      box-shadow: 0 0 14px #FFFFFF;
+      transition: background-color .4s;
+      
+      
+      
+    }
+    
+
+
+    .change-ball-button a{
+      
+      list-style: none;
+      text-decoration: none;
+      color: #000;
+
+    }
+    
+    
+    /* تصميم الأزرار عند تحويل الصفحة إلى الوضع الليلي */
+    body.night-mode .reset-button,
+    body.night-mode .toggle-light-button,
+    body.night-mode .change-shadow-button,
+    body.night-mode .change-ball-button ,
+    body.night-mode .change-ball-button a {
+      color: #5decff;
+      background-color: #fcffff;
+    }
+    
+    /* تصميم الأزرار عند تحويل الصفحة إلى الوضع النهاري */
+    body.day-mode .reset-button,
+    body.day-mode .toggle-light-button,
+    body.day-mode .change-shadow-button,
+    body.day-mode .change-ball-button ,
+    body.day-mode .change-ball-button a {
+      color: #55f4ff;
+      background-color: #000000;
+    }
+    
+    /* تحديد مكان الأزرار في الجزء السفلي من الصفحة */
+    .counter-container {
+      position: fixed;
+      bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      width: calc(100% - 40px);
+      padding: 0 20px;
+    }
+    
+    
+    
+    
+    .header {
+  text-align: center;
+  margin-bottom: 20px;
+  
+}
+
+.header h1 {
+  font-size: 2em;
+  transition: color 0.3s;
+}
+
+.header-container {
+  padding: 10px;
+}
+
+/* تغيير لون الكلمة والمربع في الوضع الليلي */
+body.night-mode .header h1 {
+  color: #000; /* لون الكلمة في الصفحة الليلية */
+}
+
+body.night-mode .header-container {
+  background-color: #fff; /* لون المربع في الصفحة الليلية */
+}
+
+/* تغيير لون الكلمة والمربع في الوضع النهاري */
+body.day-mode .header h1 {
+  color: #fff; /* لون الكلمة في الصفحة النهارية */
+}
+
+body.day-mode .header-container {
+  background-color: #000; /* لون المربع في الصفحة النهارية */
+}
+
+
+
+
+/* تنسيقات العنوان */
+.header-container {
+  background-color: #fff; /* لون المربع في الصفحة الليلية */
+  padding: 0px;
+  border-radius: 60px 70px 40px 140px; /* تعديل شكل المربع */
+  box-shadow: 12px 10px 20px #383737; /* إضافة ظل للمربع */
+  width: 98% ; /* العرض */
+  height: 50px; /* الارتفاع */
+  position: fixed; /* تثبيت المربع */
+  top: 0; /* تحديد المسافة من الأعلى لتثبيت المربع */
+  left: 50%; /* تحديد المسافة من اليسار لتوسيط المربع */
+  transform: translateX(1%); /* توسيط المربع بناءً على موقعه الأفقي */
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+  
+}
+
+.header h1 {
+  color: #000000; /* لون الكلمة في الصفحة الليلية */
+  font-size: 20px;
+  transition: color 1s;
+}
+
+/* تنسيقات لوضع العنوان في أعلى الصفحة */
+.header-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1; /* للتأكد من ظهور العنوان فوق كل شيء آخر */
+}
+
+/* تنسيقات المسبحة وأزرارها */
+.counter-container {
+  margin-top: auto; /* لتحديد المسافة بين العنوان وباقي المحتوى */
+}
+
+
+
+
+
+
+
+.background-pulse {
+  animation: backgroundPulse 1s infinite; /* تأثير النبض */
+}
+
+@keyframes backgroundPulse {
+  0% {
+    background-color: #000000;
+  }
+  50% {
+    background-color: #ffffff;
+  }
+  100% {
+    background-color: #000000;
+  }
+}
+
+
+
+::selection{
+    background-color: #00e1ff;
+    color: #000000;
+   
+  }
+
+
+
+
+
+  </style>
+</head>
+
+<body>
+  
+
+  
+    <div class="header-container">
+      <div class="header">
+        <h1>المسبحة الإلكترونية </h1>
+        
+      </div>
+    </div>
+  
+  
+
+
+  <!-- المسبحة -->
+  <div class="counter-container">
+    <div class="tasbeeh" onclick="count()">
+      <div class="noon"></div>
+      <span id="counter">0</span>
+    </div>
+    <div class="reset-button" onclick="resetCount()"> 🔁</div>
+    <div class="toggle-light-button" onclick="toggleLight()">تغيير لون الصفحة</div>
+    
+    <div class="change-shadow-button" onclick="toggleShadowColor()">تغيير لون الظل</div>
+    
+    
+    <div class="change-ball-button" onclick="changeBallColor()">تغيير لون الكرة</div>
+
+    <div class="change-ball-button"> <a href="index.html">&#10531; العودة</a>  
+    
+    </div>
+  </div>
+
+  <script>
+    var countValue = 0;
+
+    function count() {
+      countValue++;
+      document.getElementById('counter').innerText = countValue;
+      document.querySelector('.tasbeeh').classList.add('clicked');
+      setTimeout(() => {
+        document.querySelector('.tasbeeh').classList.remove('clicked');
+      }, 300);
+    }
+    
+    
+    document.addEventListener("DOMContentLoaded", function() {
+      const body = document.body;
+      const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    
+      if (prefersDarkScheme) {
+        body.classList.add("night-mode");
+      } else {
+        body.classList.add("day-mode");
+      }
+    });
+
+    function resetCount() {
+      countValue = 0;
+      document.getElementById('counter').innerText = countValue;
+    }
+
+    function toggleLight() {
+      const body = document.body;
+      const lightIcon = document.getElementById('light-icon');
+
+      if (body.classList.contains('night-mode')) {
+        body.classList.remove('night-mode');
+        body.classList.add('day-mode');
+        lightIcon.innerHTML = '&#x1F31E;'; // رمز الشمس
+      } else {
+        body.classList.remove('day-mode');
+        body.classList.add('night-mode');
+        lightIcon.innerHTML = '&#x1F31A;'; // رمز القمر
+      }
+    }
+
+    function changeShadowColor() {
+      const tasbeeh = document.querySelector('.tasbeeh');
+
+      if (tasbeeh.classList.contains('night-mode')) {
+        tasbeeh.style.boxShadow = '0 0 20px rgba(255, 255, 255, 0.3), 0 0 40px rgba(255, 255, 255, 0.5)';
+      } else {
+        tasbeeh.style.boxShadow = '0 0 20px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.5)';
+      }
+    }
+
+    function changeBallColor() {
+      const tasbeeh = document.querySelector('.tasbeeh');
+      const moon = document.querySelector('.moon');
+
+      if (tasbeeh.style.backgroundColor === 'black') {
+        tasbeeh.style.backgroundColor = 'white';
+        moon.style.backgroundColor = 'black';
+      } else {
+        tasbeeh.style.backgroundColor = 'black';
+        moon.style.backgroundColor = 'white';
+      }
+    }
+    
+    function toggleShadowColor() {
+      const tasbeeh = document.querySelector('.tasbeeh');
+      const body = document.body;
+    
+      if (body.classList.contains('night-mode')) {
+        if (tasbeeh.classList.contains('black-shadow')) {
+          tasbeeh.classList.remove('black-shadow');
+          tasbeeh.classList.add('white-shadow');
+        } else {
+          tasbeeh.classList.remove('white-shadow');
+          tasbeeh.classList.add('black-shadow');
+        }
+      } else {
+        if (tasbeeh.classList.contains('black-shadow')) {
+          tasbeeh.classList.remove('black-shadow');
+          tasbeeh.classList.add('white-shadow');
+        } else {
+          tasbeeh.classList.remove('white-shadow');
+          tasbeeh.classList.add('black-shadow');
+        }
+      }
+    }
+    
+    
+    // script.js
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      let count = localStorage.getItem('counter') || 0;
+      updateCounterDisplay(count);
+    
+      document.getElementById('increaseBtn').addEventListener('click', function() {
+        count++;
+        updateCounterDisplay(count);
+        localStorage.setItem('counter', count);
+      });
+    
+      // تحديث قيمة العدد المعروضة في الصفحة
+      function updateCounterDisplay(count) {
+        document.getElementById('counterDisplay').textContent = count;
+      }
+    
+      // حفظ العدد في التخزين المحلي عند خروج المستخدم
+      window.onunload = function() {
+        localStorage.setItem('counter', count);
+      };
+    });
+    
+
+
+
+    // القيمة التي تختارها لتفعيل الأنيميشن بناءً عليها (مثال: 10 أو 100)
+const triggerCount = 100; // يمكنك تغيير هذا الرقم حسب الحاجة
+
+function count() {
+  countValue++;
+  document.getElementById('counter').innerText = countValue;
+  document.querySelector('.tasbeeh').classList.add('clicked');
+  
+  // تحقق إذا كان الرقم الحالي مضاعف للقيمة المختارة لتفعيل الأنيميشن
+  if (countValue % triggerCount === 0) {
+    document.body.classList.add('background-pulse');
+    
+    // إزالة الأنيميشن بعد 3 ثوانٍ (يمكنك تغيير المدة)
+    setTimeout(() => {
+      document.body.classList.remove('background-pulse');
+    }, 2000);
+  }
+  
+  setTimeout(() => {
+    document.querySelector('.tasbeeh').classList.remove('clicked');
+  }, 300);
+}
+
+    
+    
+  </script>
+
+</body>

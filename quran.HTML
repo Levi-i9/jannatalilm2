@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>القرآن الكريم</title>
+    <link rel="stylesheet" href="quran.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+
+    <li><a href="index.html"  id="bak">&#10531;</a></li>
+
+    
+    <div class="container">
+        <header>
+            <h1>القرآن الكريم</h1>
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="ابحث عن السورة...">
+                <div id="searchResults" class="search-results"></div>
+            </div>
+            <div class="controls">
+                <button id="fontSizeBtn" class="control-btn">
+                    <i class="fas fa-text-height"></i>
+                    حجم الخط
+                </button>
+                <button id="surahListBtn" class="surah-select-btn">
+                    <i class="fas fa-book-open"></i>
+                    قائمة السور
+                </button>
+                <div class="font-size-popup" id="fontSizePopup">
+                    <button data-size="small">صغير</button>
+                    <button data-size="medium">متوسط</button>
+                    <button data-size="large">كبير</button>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="surah-navigation">
+                <button id="prevSurah" class="nav-btn">
+                    <i class="fas fa-chevron-right"></i>
+                    السورة السابقة
+                </button>
+                <div class="surah-selector">
+                    <button id="surahDropdown" class="dropdown-btn">اختر السورة</button>
+                    <div id="surahList" class="surah-list"></div>
+                </div>
+                <button id="nextSurah" class="nav-btn">
+                    السورة التالية
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            </div>
+
+            <div id="surahContent" class="surah-content">
+                <h2 id="surahTitle"></h2>
+                <div id="surahText" class="surah-text"></div>
+            </div>
+
+            <div id="tafseerPanel" class="tafseer-panel">
+                <h3>التفسير المختصر</h3>
+                <div id="tafseerContent"></div>
+            </div>
+        </main>
+
+        <div class="reading-progress">
+            <div class="progress-bar">
+                <div class="progress"></div>
+            </div>
+            <button id="saveProgress" class="save-btn">
+                <i class="fas fa-bookmark"></i>
+                حفظ الموضع
+            </button>
+        </div>
+    </div>
+
+    <!-- إضافة حاويات صور القرآن -->
+    <div class="quran-images-container" id="quranImagesContainer">
+        <button class="close-modal" id="closeImagesContainer">
+            <i class="fas fa-times"></i>
+        </button>
+        <div id="quranImagesList"></div>
+    </div>
+
+    <div class="quran-image-modal" id="quranImageModal">
+        <button class="close-modal" id="closeImageModal">
+            <i class="fas fa-times"></i>
+        </button>
+        <img id="modalImage" class="modal-image" src="" alt="سورة القرآن">
+    </div>
+
+    <!-- قائمة السور -->
+    <div class="surah-list-container" id="surahListContainer">
+        <button class="close-modal" id="closeSurahList">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="surah-grid" id="surahGrid"></div>
+    </div>
+
+    <script src="quran.js"></script>
+</body>
+</html>
